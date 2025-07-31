@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sleep Health Analyzer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #141e30, #243b55);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+      width: 90%;
+      max-width: 800px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: 600;
+      color: #00d4ff;
+    }
+
+    label {
+      font-weight: 500;
+      color: #e0f7fa;
+    }
+
+    .form-control, .form-select {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: #00d4ff;
+      box-shadow: 0 0 8px #00d4ff;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-submit {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      width: 100%;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(to right, #0072ff, #00c6ff);
+      box-shadow: 0 4px 12px rgba(0, 198, 255, 0.3);
+    }
+
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: rgb(255, 0, 0);
+      border-left: 5px solid #1a1b1b;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+  <h1>🛌 Sleep Health Analyzer</h1>
+  <form method="POST">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label>Quality of Sleep (1–10)</label>
+        <input type="number" name="quality" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Physical Activity (mins/day)</label>
+        <input type="number" name="activity" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Heart Rate (bpm)</label>
+        <input type="number" name="heart_rate" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Daily Steps</label>
+        <input type="number" name="steps" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Systolic Pressure</label>
+        <input type="number" name="systolic" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label>Diastolic Pressure</label>
+        <input type="number" name="diastolic" class="form-control" required>
+      </div>
+      <div class="col-md-12">
+        <label>BMI Category</label>
+        <select name="bmi" class="form-select" required>
+          <option value="Normal">Normal</option>
+          <option value="Overweight">Overweight</option>
+          <option value="Obese">Obese</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn-submit">Predict Health Status</button>
+  </form>
+
+  {% if stress is not none %}
+  <div class="result mt-4">
+    <h5>🧠 Predicted Stress Level: <strong>{{ stress }}</strong></h5>
+    <h5>😴 Predicted Sleep Disorder: <strong>{{ disorder }}</strong></h5>
+  </div>
+  {% endif %}
+
+  {% if stress_chart %}
+    <div class="mt-4">
+      <img src="data:image/png;base64,{{ stress_chart }}" class="img-fluid mb-2">
+      <img src="data:image/png;base64,{{ pie_chart }}" class="img-fluid mb-2">
+      <img src="data:image/png;base64,{{ box_chart }}" class="img-fluid">
+    </div>
+  {% endif %}
+</div>
+
+</body>
+</html>
